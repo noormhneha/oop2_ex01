@@ -1,7 +1,7 @@
 #include "Rectangle.h"
 
 void Rectangle::nameOfShape() const {
-    std::cout << "Rectangle (w: " << m_width << ", h: " << m_height << ")";
+    std::cout << "  Rectangle (w: " << m_width << ", h: " << m_height << ")";
 }
 
 void Rectangle::draw() const {

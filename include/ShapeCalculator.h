@@ -10,6 +10,7 @@
 #include "Rectangle.h"
 #include "Triangle.h"
 #include "DuplicateShape.h"
+#include "StackedShape.h"
 
 class ShapeCalculator {
 public:

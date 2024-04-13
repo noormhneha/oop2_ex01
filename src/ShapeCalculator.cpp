@@ -32,9 +32,10 @@ void ShapeCalculator::duplicate(int lstItem, int times) {
     }
 }
 
-void ShapeCalculator::stack(int lstItem, int times) {
-    if (lstItem < m_shapes.size()) {
-        // stack item lstItem X times 
+void ShapeCalculator::stack(int lstItem1, int lstItem2) {
+    if (lstItem1 < m_shapes.size() && lstItem2 < m_shapes.size()) {
+        auto stacked_shape = std::make_shared<StackedShape>(m_shapes[lstItem1], m_shapes[lstItem2]);
+        m_shapes.push_back(stacked_shape);
     }
 }
 
@@ -91,7 +92,9 @@ void ShapeCalculator::handle_command(const std::string& command) {
         draw(item);
     }
     else if (command == "stack") {
-        // stack
+        int lstItem1, lstItem2;
+        std::cin >> lstItem1 >> lstItem2;
+        stack(lstItem1, lstItem2);
     }
     else if (command == "dup") {
         int lstItem, times;
