@@ -1,0 +1,19 @@
+The available commands are:
+
+* cre(ate shape) <t - triangle | r - rectangle | s - square> x [y] - create new shape according to the chosen letter, with the given size(s) (y must be given only for a rectangle)
+
+* en(large) num n - enlarge the size of the sides of shape #num by n (1 - 10)
+
+* red(uce) num n - reduce the size of the sides of shape #num by n (1 - 10)
+
+* draw num - draw shape #num
+
+* dup(licate) num n - create a new shape which is a n times (vertical) duplication of shape #num
+
+* stack num1 num2 - create a new shape by stacking shape number #num1 over shape number #num2
+
+* del(ete) num - delete shape #num from the shape list
+
+* help - Display this help message.
+
+* exit - Exit the program.
