@@ -4,10 +4,12 @@ void Rectangle::nameOfShape() const {
     std::cout << "  Rectangle (w: " << m_width << ", h: " << m_height << ")";
 }
 
-void Rectangle::draw() const {
+void Rectangle::draw(double size) const {
     for (size_t i = 0; i < m_height; i++) {
-        for (size_t j = 0; j < m_width; j++) {
-            std::cout << ((i == 0 || i == m_height - 1 || j == 0 || j == m_width - 1) ? '*' : ' ');
+        for (size_t count = 0; count < size; count++) {
+            for (size_t j = 0; j < m_width; j++) {
+                std::cout << ((i == 0 || i == m_height - 1 || j == 0 || j == m_width - 1) ? '*' : ' ');
+            }
         }
         std::cout << std::endl;
     }

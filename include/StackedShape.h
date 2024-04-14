@@ -10,13 +10,13 @@ public:
     void nameOfShape() const override {
         std::cout << "  (";
         m_shape1->nameOfShape();
-        std::cout << " / ";
+        std::cout << " /";
         m_shape2->nameOfShape();
         std::cout << " )" << std::endl;
     }
-    void draw() const override {
-        m_shape1->draw();
-        m_shape2->draw();
+    void draw(double size) const override {
+        m_shape1->draw(1);
+        m_shape2->draw(1);
     }
 
     void setNewSize(double factor) override {

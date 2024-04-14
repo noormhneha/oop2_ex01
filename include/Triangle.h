@@ -6,7 +6,7 @@ class Triangle : public Shape {
 public:
     Triangle(int s) : m_side(s) {}
     void nameOfShape() const override;
-    void draw() const override;
+    void draw(double) const override;
 
     void setNewSize(double) override;
 private:

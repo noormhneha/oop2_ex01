@@ -12,10 +12,8 @@ public:
         m_originalShape->nameOfShape();
         std::cout << " )" << std::endl;
     }
-    void draw() const override {
-        for (int i = 0; i < m_times; ++i) {
-            m_originalShape->draw();
-        }
+    void draw(double size) const override {
+        m_originalShape->draw(m_times);
     }
 
     void setNewSize(double factor) override {

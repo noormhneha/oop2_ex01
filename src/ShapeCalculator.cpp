@@ -20,39 +20,6 @@ void ShapeCalculator::create_shape() {
     }
 }
 
-void ShapeCalculator::duplicate(int lstItem, int times) {
-    if (lstItem < m_shapes.size()) {
-        if (times > 0) {
-            auto dup_shape = std::make_shared<DuplicatedShape>(m_shapes[lstItem], times);
-            m_shapes.push_back(dup_shape);
-        }
-        else {
-            std::cerr << "Error! Duplicate failed.";
-        }
-    }
-}
-
-void ShapeCalculator::stack(int lstItem1, int lstItem2) {
-    if (lstItem1 < m_shapes.size() && lstItem2 < m_shapes.size()) {
-        auto stacked_shape = std::make_shared<StackedShape>(m_shapes[lstItem1], m_shapes[lstItem2]);
-        m_shapes.push_back(stacked_shape);
-    }
-}
-
-void ShapeCalculator::deleteItem(int lstItem) {
-    if (lstItem < m_shapes.size()) {
-        m_shapes.erase(m_shapes.begin() + lstItem);
-    }
-}
-
-void ShapeCalculator::draw(int lstItem){
-    if (lstItem < m_shapes.size()) { m_shapes[lstItem]->draw(); }
-}
-
-void ShapeCalculator::enlargeOrReduse(int lstItem, double factor) {
-    if (lstItem < m_shapes.size()) { m_shapes[lstItem]->setNewSize(factor); }
-}
-
 void ShapeCalculator::run() {
     std::cout << "Shape list is empty" << std::endl;
     while (true) {
@@ -77,15 +44,11 @@ void ShapeCalculator::handle_command(const std::string& command) {
     else if (command == "en" || command == "red") {
         int item; double factor;
         std::cin >> item >> factor;
-        if (factor >= 1 && factor <= 10) { 
-            command == "en" ? enlargeOrReduse(item, factor) : enlargeOrReduse(item, 1/factor);
+        if (factor >= 1 && factor <= 10) {
+            command == "en" ? enlargeOrReduse(item, factor) : enlargeOrReduse(item, 1 / factor);
+            // (1 / factor) * x = x / factor 
         }
     }
-    //else if (command == "red") {
-    //    int item, factor;
-    //    std::cin >> item >> factor;
-    //    if (factor >= 1 && factor <= 10) { enlarge(item, 1/factor); }
-    //}
     else if (command == "draw") {
         int item;
         std::cin >> item;
@@ -114,6 +77,41 @@ void ShapeCalculator::handle_command(const std::string& command) {
         std::cout << "Unknown command" << std::endl;
     }
 }
+
+
+void ShapeCalculator::duplicate(int lstItem, int times) {
+    if (lstItem < m_shapes.size()) {
+        if (times > 0) {
+            auto dup_shape = std::make_shared<DuplicatedShape>(m_shapes[lstItem], times);
+            m_shapes.push_back(dup_shape);
+        }
+        else {
+            std::cerr << "Error! Duplicate failed.";
+        }
+    }
+}
+
+void ShapeCalculator::stack(int lstItem1, int lstItem2) {
+    if (lstItem1 < m_shapes.size() && lstItem2 < m_shapes.size()) {
+        auto stacked_shape = std::make_shared<StackedShape>(m_shapes[lstItem1], m_shapes[lstItem2]);
+        m_shapes.push_back(stacked_shape);
+    }
+}
+
+void ShapeCalculator::deleteItem(int lstItem) {
+    if (lstItem < m_shapes.size()) {
+        m_shapes.erase(m_shapes.begin() + lstItem);
+    }
+}
+
+void ShapeCalculator::draw(int lstItem){
+    if (lstItem < m_shapes.size()) { m_shapes[lstItem]->draw(1); }
+}
+
+void ShapeCalculator::enlargeOrReduse(int lstItem, double factor) {
+    if (lstItem < m_shapes.size()) { m_shapes[lstItem]->setNewSize(factor); }
+}
+
 
 void ShapeCalculator::printShapesList() const {
     if (!m_shapes.empty()) {
