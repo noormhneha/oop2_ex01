@@ -112,7 +112,10 @@ void ShapeCalculator::draw(int lstItem){
 }
 
 void ShapeCalculator::enlargeOrReduse(int lstItem, double factor) {
-    if (lstItem < m_shapes.size()) { m_shapes[lstItem]->setNewSize(factor); }
+    if (lstItem < m_shapes.size()) { 
+        m_shapes[lstItem]->setNewSize(factor); 
+        //StackedShape::containsSameShape(m_shapes[lstItem], factor);
+    }
 }
 
 

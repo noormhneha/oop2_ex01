@@ -1,7 +1,14 @@
 #include "StackedShape.h"
 
+//std::shared_ptr<Shape> StackedShape::m_firstAboveShape = nullptr;
+//std::shared_ptr<Shape> StackedShape::m_firstBelowShape = nullptr;
+
 StackedShape::StackedShape(std::shared_ptr<Shape> shape1, std::shared_ptr<Shape> shape2)
-    : m_aboveShape(shape1)/*->clone())*/, m_belowShape(shape2)/*->clone())*/ {}
+    : m_aboveShape(shape1),m_belowShape(shape2) {
+
+    //m_firstAboveShape = shape1;
+    //m_firstBelowShape = shape2;
+}
 
 StackedShape::StackedShape(const StackedShape& other) 
     : m_aboveShape(other.m_aboveShape->clone()), m_belowShape(other.m_belowShape->clone()) {}
@@ -31,3 +38,28 @@ void StackedShape::setNewSize(double factor) {
     m_aboveShape = shape1;
     m_belowShape = shape2;
 }
+
+//void StackedShape::containsSameShape(std::shared_ptr<Shape> pShape, double factor) {
+//    // pShape and m_firstAboveShape point to the same object
+//    if (compareAbove(pShape)) {
+//        //m_aboveShape->setNewSize(factor);
+//        (*m_firstAboveShape).setNewSize(factor);
+//
+//    }
+//    // pShape and m_firstBelowShape point to the same object
+//    else if (compareBelow(pShape)) {
+//        //m_belowShape->setNewSize(factor);
+//        (*m_firstBelowShape).setNewSize(factor);
+//
+//    }
+//}
+//
+//bool StackedShape::compareAbove(std::shared_ptr<Shape> shape) {
+//    return (m_firstAboveShape.get() == shape.get()) &&
+//            m_firstAboveShape.use_count() > 1;
+//}
+//
+//bool StackedShape::compareBelow(std::shared_ptr<Shape> shape) {
+//    return (m_firstBelowShape.get() == shape.get()) && 
+//            m_firstBelowShape.use_count() > 1;
+//}
