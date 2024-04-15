@@ -1,7 +1,12 @@
 #include "Square.h"
 
+Square::Square(int s) : m_side(s) {}
+Square::Square(const Square& other) : m_side(other.m_side) {}
+
+std::shared_ptr<Shape> Square::clone() const { return std::make_shared<Square>(*this); }
+
 void Square::nameOfShape() const {
-    std::cout << "  Square(" << m_side << ")";
+    std::cout << "Square(" << m_side << ")";
 }
 
 void Square::draw(double size) const {

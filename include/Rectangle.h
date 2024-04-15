@@ -4,11 +4,13 @@
 
 class Rectangle : public Shape {
 public:
-    Rectangle(int w, int h) : m_width(w), m_height(h) {}
+    Rectangle(int, int);
+    Rectangle(const Rectangle&);
+    std::shared_ptr<Shape> clone() const override;
     void nameOfShape() const override;
     void draw(double) const override;
-
     void setNewSize(double) override;
+
 private:
     int m_width, m_height;
 };

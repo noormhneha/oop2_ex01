@@ -1,5 +1,7 @@
 #include "ShapeCalculator.h"
 
+ShapeCalculator::ShapeCalculator() : m_arg1(0), m_arg2(0) {}
+
 void ShapeCalculator::create_shape() {
     char shape_type;
     std::cin >> shape_type >> m_arg1;
@@ -100,12 +102,13 @@ void ShapeCalculator::stack(int lstItem1, int lstItem2) {
 
 void ShapeCalculator::deleteItem(int lstItem) {
     if (lstItem < m_shapes.size()) {
+        /*m_shapes[lstItem].reset();*/
         m_shapes.erase(m_shapes.begin() + lstItem);
     }
 }
 
 void ShapeCalculator::draw(int lstItem){
-    if (lstItem < m_shapes.size()) { m_shapes[lstItem]->draw(1); }
+    if (lstItem < m_shapes.size()) { m_shapes[lstItem]->draw(1); std::cout << std::endl; }
 }
 
 void ShapeCalculator::enlargeOrReduse(int lstItem, double factor) {
@@ -115,9 +118,9 @@ void ShapeCalculator::enlargeOrReduse(int lstItem, double factor) {
 
 void ShapeCalculator::printShapesList() const {
     if (!m_shapes.empty()) {
-        std::cout << "List of the availble m_shapes:" << std::endl;
+        std::cout << "List of the availble shapes:" << std::endl;
         for (size_t i = 0; i < m_shapes.size(); ++i) {
-            std::cout << i << ". ";
+            std::cout << i << ". \t";
             m_shapes[i]->nameOfShape();
             std::cout << std::endl;
         }

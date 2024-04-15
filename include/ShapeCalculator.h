@@ -9,12 +9,12 @@
 #include "Square.h"
 #include "Rectangle.h"
 #include "Triangle.h"
-#include "DuplicateShape.h"
+#include "DuplicatedShape.h"
 #include "StackedShape.h"
 
 class ShapeCalculator {
 public:
-    ShapeCalculator() : m_arg1(0), m_arg2(0) {};
+    ShapeCalculator();
     void run();
     void printShapesList() const;
 

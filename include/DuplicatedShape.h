@@ -2,15 +2,16 @@
 
 #include "Shape.h"
 
-class Square : public Shape {
+class DuplicatedShape : public Shape {
 public:
-    Square(int);
-    Square(const Square&);
+    DuplicatedShape(std::shared_ptr<Shape>, int);
+    DuplicatedShape(const DuplicatedShape&);
     std::shared_ptr<Shape> clone() const override;
     void nameOfShape() const override;
     void draw(double) const override;
     void setNewSize(double) override;
 
 private:
-    int m_side;
+    std::shared_ptr<Shape> m_originalShape;
+    int m_times;
 };

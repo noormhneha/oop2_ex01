@@ -1,7 +1,12 @@
 #include "Triangle.h"
 
+Triangle::Triangle(int s) : m_side(s) {}
+Triangle::Triangle(const Triangle& other) : m_side(other.m_side) {}
+
+std::shared_ptr<Shape> Triangle::clone() const { return std::make_shared<Triangle>(*this); }
+
 void Triangle::nameOfShape() const {
-    std::cout << "  Triangle(" << m_side << ")";
+    std::cout << "Triangle(" << m_side << ")";
 }
 
 void Triangle::draw(double size) const {
@@ -23,4 +28,4 @@ void Triangle::draw(double size) const {
     }
 }
 
-void Triangle::setNewSize(double factor) { m_side *= factor; }
+void Triangle::setNewSize(double factor) { this->m_side *= factor; }

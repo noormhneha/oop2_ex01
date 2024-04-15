@@ -4,27 +4,14 @@
 
 class StackedShape : public Shape {
 public:
-    StackedShape(std::shared_ptr<Shape> shape1, std::shared_ptr<Shape> shape2)
-        : m_shape1(shape1), m_shape2(shape2) {}
-
-    void nameOfShape() const override {
-        std::cout << "  (";
-        m_shape1->nameOfShape();
-        std::cout << " /";
-        m_shape2->nameOfShape();
-        std::cout << " )" << std::endl;
-    }
-    void draw(double size) const override {
-        m_shape1->draw(1);
-        m_shape2->draw(1);
-    }
-
-    void setNewSize(double factor) override {
-        m_shape1->setNewSize(factor);
-        m_shape2->setNewSize(factor);
-    }
+    StackedShape(std::shared_ptr<Shape>, std::shared_ptr<Shape>);
+    StackedShape(const StackedShape&);
+    std::shared_ptr<Shape> clone() const override;
+    void nameOfShape() const override;
+    void draw(double) const override;
+    void setNewSize(double) override;
 
 private:
-    std::shared_ptr<Shape> m_shape1;
-    std::shared_ptr<Shape> m_shape2;
+    std::shared_ptr<Shape> m_aboveShape;
+    std::shared_ptr<Shape> m_belowShape;
 };
