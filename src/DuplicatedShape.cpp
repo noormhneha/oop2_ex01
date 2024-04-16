@@ -16,8 +16,11 @@ void DuplicatedShape::nameOfShape() const {
 
 void DuplicatedShape::draw(double size) const { m_originalShape->draw(m_times); }
 
-void DuplicatedShape::setNewSize(double factor) { 
-    auto shape(m_originalShape->clone());
-    shape->setNewSize(factor);
-    m_originalShape = shape;
+void DuplicatedShape::setNewSize(double factor) {
+    DuplicatedShape duplicated(*this);
+    duplicated.m_originalShape->setNewSize(factor);
+    this->m_originalShape = duplicated.m_originalShape;
 }
+
+std::shared_ptr<Shape> DuplicatedShape::getShape() const { return m_firstOriginalShape; }
+void DuplicatedShape::setSize(double factor) { m_originalShape->setNewSize(factor); }

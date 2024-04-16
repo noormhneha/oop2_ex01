@@ -28,4 +28,6 @@ void Triangle::draw(double size) const {
     }
 }
 
-void Triangle::setNewSize(double factor) { this->m_side *= factor; }
+void Triangle::setNewSize(double factor) { 
+    m_side *= factor; 
+}

@@ -11,7 +11,13 @@ public:
     void draw(double) const override;
     void setNewSize(double) override;
 
+    std::shared_ptr<Shape> getShape() const;
+    void setSize(double);
+
 private:
     std::shared_ptr<Shape> m_originalShape;
     int m_times;
+
+    std::shared_ptr<Shape> m_firstOriginalShape;
+
 };
