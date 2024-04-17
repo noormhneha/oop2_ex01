@@ -2,6 +2,7 @@
 
 ShapeCalculator::ShapeCalculator() : m_arg1(0), m_arg2(0) {}
 
+// creating shape { cre [t|r|s] x [y] }
 void ShapeCalculator::create_shape() {
     char shape_type;
     std::cin >> shape_type >> m_arg1;
@@ -48,7 +49,7 @@ void ShapeCalculator::handle_command(const std::string& command) {
         std::cin >> item >> factor;
         if (factor >= 1 && factor <= 10) {
             command == "en" ? enlargeOrReduse(item, factor) : enlargeOrReduse(item, 1 / factor);
-            // (1 / factor) * x = x / factor 
+            // (1 / factor) * x = x / factor
         }
     }
     else if (command == "draw") {
@@ -82,7 +83,7 @@ void ShapeCalculator::handle_command(const std::string& command) {
 
 
 void ShapeCalculator::duplicate(int lstItem, int times) {
-    if (lstItem < m_shapes.size()) {
+    if (lstItem < static_cast<int>(m_shapes.size())) {
         if (times > 0) {
             auto dup_shape = std::make_shared<DuplicatedShape>(m_shapes[lstItem], times);
             m_shapes.push_back(dup_shape);
@@ -94,48 +95,22 @@ void ShapeCalculator::duplicate(int lstItem, int times) {
 }
 
 void ShapeCalculator::stack(int lstItem1, int lstItem2) {
-    if (lstItem1 < m_shapes.size() && lstItem2 < m_shapes.size()) {
+    if (lstItem1 <  static_cast<int>(m_shapes.size()) && lstItem2 < static_cast<int>(m_shapes.size())) {
         auto stacked_shape = std::make_shared<StackedShape>(m_shapes[lstItem1], m_shapes[lstItem2]);
         m_shapes.push_back(stacked_shape);
     }
 }
 
 void ShapeCalculator::deleteItem(int lstItem) {
-    if (lstItem < m_shapes.size()) {
-        /*m_shapes[lstItem].reset();*/
-        m_shapes.erase(m_shapes.begin() + lstItem);
-    }
+    if (lstItem < static_cast<int>(m_shapes.size())) { m_shapes.erase(m_shapes.begin() + lstItem); }
 }
 
 void ShapeCalculator::draw(int lstItem){
-    if (lstItem < m_shapes.size()) { m_shapes[lstItem]->draw(1); std::cout << std::endl; }
+    if (lstItem < static_cast<int>(m_shapes.size())) { m_shapes[lstItem]->draw(1); std::cout << std::endl; }
 }
 
-//void ShapeCalculator::enlargeOrReduse(int lstItem, double factor) {
-//    if (lstItem < m_shapes.size()) {
-//        m_shapes[lstItem]->setNewSize(factor);
-//        if (m_shapes[lstItem].use_count() > 1) {
-//            for (auto& shape : m_shapes) {
-//                if (auto stackedShapePtr = std::dynamic_pointer_cast<StackedShape>(shape)) {
-//                    if (stackedShapePtr->getAboveShape().get() == m_shapes[lstItem].get()) {
-//                        stackedShapePtr->setSizeAbove(factor);
-//                    }
-//                    else if (stackedShapePtr->getBelowShape().get() == m_shapes[lstItem].get()) {
-//                        stackedShapePtr->setSizeBelow(factor);
-//                    }
-//                }
-//                else if (auto duplicatedShapePtr = std::dynamic_pointer_cast<DuplicatedShape>(shape)) {
-//                    if (duplicatedShapePtr->getShape().get() == m_shapes[lstItem].get()) {
-//                        duplicatedShapePtr->setSize(factor);
-//                    }
-//                }
-//            }
-//        }
-//    }
-//}
-
 void ShapeCalculator::enlargeOrReduse(int lstItem, double factor) {
-    if (lstItem < m_shapes.size()) {
+    if (lstItem < static_cast<int>(m_shapes.size())) {
         m_shapes[lstItem]->setNewSize(factor);
         if (m_shapes[lstItem].use_count() > 1) {
             for (auto& shape : m_shapes) {
@@ -145,7 +120,7 @@ void ShapeCalculator::enlargeOrReduse(int lstItem, double factor) {
     }
 }
 
-void ShapeCalculator::modifyNestedShapes(std::shared_ptr<Shape> currentShape, std::shared_ptr<Shape> targetShape, double factor) {
+void ShapeCalculator::modifyNestedShapes(const std::shared_ptr<Shape>& currentShape, std::shared_ptr<Shape> targetShape, double factor) {
     if (auto stackedShapePtr = std::dynamic_pointer_cast<StackedShape>(currentShape)) {
         if (stackedShapePtr->getAboveShape().get() == targetShape.get()) {
             stackedShapePtr->setSizeAbove(factor);
@@ -171,7 +146,7 @@ void ShapeCalculator::modifyNestedShapes(std::shared_ptr<Shape> currentShape, st
 
 void ShapeCalculator::printShapesList() const {
     if (!m_shapes.empty()) {
-        std::cout << "List of the availble shapes:" << std::endl;
+        std::cout << "List of the available shapes:" << std::endl;
         for (size_t i = 0; i < m_shapes.size(); ++i) {
             std::cout << i << ". \t";
             m_shapes[i]->nameOfShape();
@@ -181,7 +156,7 @@ void ShapeCalculator::printShapesList() const {
     }
 }
 
-void ShapeCalculator::help() const {
+void ShapeCalculator::help() {
     std::ifstream file("helper.txt");
     if (file.is_open()) {
         std::string line;

@@ -30,11 +30,11 @@ private:
     void stack(int, int);
     void deleteItem(int);
     void draw(int); // draw
-    void help() const; // help
+    static void help() ; // help
 
     // ------------
 
-    void modifyNestedShapes(std::shared_ptr<Shape>, std::shared_ptr<Shape>, double);
+    void modifyNestedShapes(const std::shared_ptr<Shape>&, std::shared_ptr<Shape>, double);
 
     std::vector<std::shared_ptr<Shape>> m_shapes;
     int m_arg1;
