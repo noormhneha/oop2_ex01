@@ -34,7 +34,7 @@ private:
 
     // ------------
 
-    //void modifyNestedShapes(std::shared_ptr<Shape>, std::shared_ptr<Shape>, double);
+    void modifyNestedShapes(std::shared_ptr<Shape>, std::shared_ptr<Shape>, double);
 
     std::vector<std::shared_ptr<Shape>> m_shapes;
     int m_arg1;

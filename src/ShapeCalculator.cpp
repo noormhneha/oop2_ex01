@@ -111,73 +111,62 @@ void ShapeCalculator::draw(int lstItem){
     if (lstItem < m_shapes.size()) { m_shapes[lstItem]->draw(1); std::cout << std::endl; }
 }
 
+//void ShapeCalculator::enlargeOrReduse(int lstItem, double factor) {
+//    if (lstItem < m_shapes.size()) {
+//        m_shapes[lstItem]->setNewSize(factor);
+//        if (m_shapes[lstItem].use_count() > 1) {
+//            for (auto& shape : m_shapes) {
+//                if (auto stackedShapePtr = std::dynamic_pointer_cast<StackedShape>(shape)) {
+//                    if (stackedShapePtr->getAboveShape().get() == m_shapes[lstItem].get()) {
+//                        stackedShapePtr->setSizeAbove(factor);
+//                    }
+//                    else if (stackedShapePtr->getBelowShape().get() == m_shapes[lstItem].get()) {
+//                        stackedShapePtr->setSizeBelow(factor);
+//                    }
+//                }
+//                else if (auto duplicatedShapePtr = std::dynamic_pointer_cast<DuplicatedShape>(shape)) {
+//                    if (duplicatedShapePtr->getShape().get() == m_shapes[lstItem].get()) {
+//                        duplicatedShapePtr->setSize(factor);
+//                    }
+//                }
+//            }
+//        }
+//    }
+//}
+
 void ShapeCalculator::enlargeOrReduse(int lstItem, double factor) {
     if (lstItem < m_shapes.size()) {
-        m_shapes[lstItem]->setNewSize(factor); 
+        m_shapes[lstItem]->setNewSize(factor);
         if (m_shapes[lstItem].use_count() > 1) {
             for (auto& shape : m_shapes) {
-                if (auto stackedShapePtr = std::dynamic_pointer_cast<StackedShape>(shape)) {
-                    if (stackedShapePtr->getAboveShape().get() == m_shapes[lstItem].get()) {
-                        stackedShapePtr->setSizeAbove(factor);
-                    }
-                    else if (stackedShapePtr->getBelowShape().get() == m_shapes[lstItem].get()) {
-                        stackedShapePtr->setSizeBelow(factor);
-                    }
-                }
-                else if (auto duplicatedShapePtr = std::dynamic_pointer_cast<DuplicatedShape>(shape)) {
-                    if (duplicatedShapePtr->getShape().get() == m_shapes[lstItem].get()) {
-                        duplicatedShapePtr->setSize(factor);
-                    }
-                }
+                modifyNestedShapes(shape, m_shapes[lstItem], factor);
             }
         }
     }
 }
 
-//void ShapeCalculator::enlargeOrReduse(int lstItem, double factor) {
-//    if (lstItem < m_shapes.size()) {
-//        if (m_shapes[lstItem].use_count() > 1) {
-//            for (auto it = m_shapes.rbegin(); it != m_shapes.rend(); ++it) {
-//                modifyNestedShapes(*it, m_shapes[lstItem], factor);
-//            }
-//        }
-//        else {
-//            m_shapes[lstItem]->setNewSize(factor);
-//        }
-//    }
-//}
-//
-//void ShapeCalculator::modifyNestedShapes(std::shared_ptr<Shape> currentShape, std::shared_ptr<Shape> targetShape, double factor) {
-//    if (auto stackedShapePtr = std::dynamic_pointer_cast<StackedShape>(currentShape)) {
-//        if (stackedShapePtr->getAboveShape().get() == targetShape.get()) {
-//            stackedShapePtr->setSizeAbove(factor);
-//        }
-//        else if (stackedShapePtr->getBelowShape().get() == targetShape.get()) {
-//            stackedShapePtr->setSizeBelow(factor);
-//        }
-//        //else {
-//        //    modifyNestedShapes(stackedShapePtr->getAboveShape(), targetShape, factor);
-//        //    modifyNestedShapes(stackedShapePtr->getBelowShape(), targetShape, factor);
-//        //}
-//    }
-//    else if (auto duplicatedShapePtr = std::dynamic_pointer_cast<DuplicatedShape>(currentShape)) {
-//        if (duplicatedShapePtr->getShape().get() == targetShape.get()) {
-//            duplicatedShapePtr->setSize(factor);
-//        }
-//        else if (std::dynamic_pointer_cast<StackedShape>(duplicatedShapePtr->getShape())
-//                == std::dynamic_pointer_cast<StackedShape>(currentShape)) {
-//            if (std::dynamic_pointer_cast<StackedShape>(duplicatedShapePtr->getShape())->getAboveShape().get() == targetShape.get()) {
-//                std::dynamic_pointer_cast<StackedShape>(duplicatedShapePtr->getShape())->setSizeAbove(factor);
-//            }
-//            else {
-//                std::dynamic_pointer_cast<StackedShape>(duplicatedShapePtr->getShape())->setSizeBelow(factor);
-//            }
-//        }
-//        //else {
-//        //    modifyNestedShapes(duplicatedShapePtr->getShape(), targetShape, factor);
-//        //}
-//    }
-//}
+void ShapeCalculator::modifyNestedShapes(std::shared_ptr<Shape> currentShape, std::shared_ptr<Shape> targetShape, double factor) {
+    if (auto stackedShapePtr = std::dynamic_pointer_cast<StackedShape>(currentShape)) {
+        if (stackedShapePtr->getAboveShape().get() == targetShape.get()) {
+            stackedShapePtr->setSizeAbove(factor);
+        }
+        else if (stackedShapePtr->getBelowShape().get() == targetShape.get()) {
+            stackedShapePtr->setSizeBelow(factor);
+        }
+        else {
+            modifyNestedShapes(stackedShapePtr->getAboveShape(), targetShape, factor);
+            modifyNestedShapes(stackedShapePtr->getBelowShape(), targetShape, factor);
+        }
+    }
+    else if (auto duplicatedShapePtr = std::dynamic_pointer_cast<DuplicatedShape>(currentShape)) {
+        if (duplicatedShapePtr->getShape().get() == targetShape.get()) {
+            duplicatedShapePtr->setSize(factor);
+        }
+        else {
+            modifyNestedShapes(duplicatedShapePtr->getShape(), targetShape, factor);
+        }
+    }
+}
 
 
 void ShapeCalculator::printShapesList() const {
