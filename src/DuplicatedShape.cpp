@@ -38,6 +38,7 @@ void DuplicatedShape::setNewSize(double factor) {
 // ------------------------------------------------------------------
 // Function to get the original shape
 std::shared_ptr<Shape> DuplicatedShape::getShape() const { return m_originalShape; }
+std::shared_ptr<Shape> DuplicatedShape::getOriginalShape() const { return m_firstOriginalShape; }
 
 // ------------------------------------------------------------------
 // Function to set the size of the shape
